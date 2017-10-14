@@ -18,12 +18,17 @@
     "css-loader": "^0.28.7",
     "file-loader": "^0.11.2",
     "image-webpack-loader": "^3.4.2",
+    "node-sass": "^4.5.3",
+    "postcss-loader": "^2.0.7",
+    "sass-loader": "^6.0.6",
     "standard": "^10.0.3",
     "style-loader": "^0.18.2",
     "webpack": "^3.6.0",
     "webpack-node-externals": "^1.6.0"
   },
   "dependencies": {
+    "bulma": "^0.6.0",
+    "jquery": "^3.2.1",
     "leaflet": "^1.2.0",
     "leaflet-sidebar-v2": "^1.0.0",
     "mustache": "^2.3.0"

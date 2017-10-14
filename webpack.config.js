@@ -1,7 +1,6 @@
 'use strict'
 
 const webpack = require('webpack')
-//const nodeExternals = require('webpack-node-externals')
 const path = require('path')
 const env = require('yargs').argv.env
 
@@ -56,6 +55,24 @@ module.exports = {
             options: {emitFile: false}
           }
         ]
+      },
+      {
+        test: /\.(sass|scss)$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: () => [require('autoprefixer')]
+            }
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              includePaths: [paths.libModules, paths.libSrc]
+            }
+          }]
       }
     ]
   },

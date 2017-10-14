@@ -1,46 +1,74 @@
-import { Control, DomUtil, DomEvent } from 'leaflet'
+import { Control } from 'leaflet'
 import mustache from 'mustache'
+import $ from 'jquery'
+import 'bulma'
 import './index.css'
 
-const template = `
-  <div>
-    <div class='delete'></div>
-    <h1>{{name}}</h1>
-    <h4>
-      Număr total de firme: <strong>{{numar_firme}}</strong>
-    </h4>
-
-    <h4>
-      Top 3 cele mai mai populare domenii de activitate:
-    </h4>
-    <ul>
-    {{#top_domenii}}
-      <li>{{name}} <br /><u>cifra afaceri:</u> <strong>{{formatCa}}</strong></li>
-    {{/top_domenii}}
-    </ul>
-
-    <h4>
-      Top 3 firme după cifra de afaceri:
-    </h4>
-    <ul>
-    {{#top_firme_ca}}
-      <li><b>{{name}}</b> <br /><u>cifra afaceri:</u> <strong>{{formatCa}}</strong></li>
-    {{/top_firme_ca}}
-    </ul>
-
-  </div>
+const template2 = `
+  <nav class="panel">
+    <a class='delete'></a>
+    <p class="panel-heading">
+      {{name}} <small>({{formatNumarFirme}} firme)</small>
+    </p>
+    <p class="panel-tabs">
+      <a class="is-active">top domenii</a>
+      <a>cifra afaceri</a>
+      <a>angajati</a>
+    </p>
+    <div class='tab tab-0 is-active'>
+      <div class="panel-block">
+        <h4 class='title is-6'>
+          Top 3 cele mai mai populare domenii de activitate:
+        </h4>
+      </div>
+      <div class='panel-block content'>
+        <ul>
+        {{#top_domenii}}
+          <li>
+            {{name}} <br /><u>cifra afaceri:</u> <strong>{{formatCa}}</strong></li>
+        {{/top_domenii}}
+        </ul>
+      </div>
+    </div>
+    <div class='tab tab-1'>
+      <div class="panel-block">
+        <h4 class='title is-6'>
+          Top 3 firme după cifra de afaceri:
+        </h4>
+      </div>
+      <div class='panel-block content'>
+        <ul>
+        {{#top_firme_ca}}
+          <li>
+            {{name}} <br /><u>cifra afaceri:</u> <strong>{{formatCa}}</strong></li>
+        {{/top_firme_ca}}
+        </ul>
+      </div>
+    </div>
+    <div class='tab tab-2'>
+      <div class="panel-block">
+        <h4 class='title is-6'>
+          Top firme după angajati:
+        </h4>
+      </div>
+      <div class='panel-block content'>
+        <ul>
+        {{#top_firme_angajati}}
+          <li>
+            {{name}} <br /><u>cifra afaceri:</u> <strong>{{formatAngajati}}</strong></li>
+        {{/top_firme_angajati}}
+        </ul>
+      </div>
+    </div>
+  </nav>
 `
 
 const Sidebar = Control.extend({
   onAdd: function (map) {
-    var element = DomUtil.create('div')
+    var element = $('<div />').get(0)
     element.className = 'custom-sidebar'
-    element.style.height = map.getSize().y - 35
-    DomEvent.on(element, 'click', (e) => {
-      e.stopImmediatePropagation()
-      e.stopPropagation()
-      this.close()
-    })
+    element.style.width = map.getSize().x - 80
+    // element.style.height = map.getSize().y - 35
     return element
   },
 
@@ -48,24 +76,47 @@ const Sidebar = Control.extend({
       // Nothing to do here
   },
 
+  bindEvents: function () {
+    const container = this.getContainer()
+    $(container).find('.delete').click((e) => {
+      e.stopPropagation()
+      this.close()
+    })
+
+    $(container).find('.panel-tabs a').click((e) => {
+      const index = $(e.target).index()
+
+      $(container).find(`.panel .panel-tabs a`).removeClass('is-active')
+      $(container).find(`.panel .panel-tabs`).children().eq(index).addClass('is-active')
+      $(container).find(`.panel .tab`).removeClass('is-active')
+      $(container).find(`.panel .tab-${index}`).addClass('is-active')
+    })
+  },
+
   open: function (data) {
     const container = this.getContainer()
     const templateData = Object.assign(data, {
       'top_domenii': data['top_domenii'].slice(0, 3),
       'top_firme_ca': data['top_firme_ca'].slice(0, 3),
+      formatNumarFirme: function () {
+        return this.numar_firme.toLocaleString('ro-RO')
+      },
       formatCa: function () {
-        return Number(this.ca).toLocaleString()
+        return this.ca.toLocaleString('ro-RO', {style: 'currency', currency: 'RON'})
+      },
+      formatAngajati: function () {
+        return this.angajati.toLocaleString('ro-RO')
       }
     })
 
-    console.log(templateData)
-    container.innerHTML = mustache.render(template, templateData)
-    DomUtil.addClass(container, 'is-open')
+    container.innerHTML = mustache.render(template2, templateData)
+    $(container).addClass('is-open')
+    this.bindEvents()
   },
 
   close: function () {
     const container = this.getContainer()
-    DomUtil.removeClass(container, 'is-open')
+    $(container).removeClass('is-open')
   }
 })
 

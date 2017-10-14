@@ -1,25 +1,27 @@
 <html>
   <head>
     <title>Harta Romania</title>
+    <meta charset="utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
     <link rel='stylesheet' type='text/css' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' />
     <style>
       BODY {
-        font-family: 'BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Helvetica Neue", "Helvetica", "Arial", sans-serif';
+        margin: 0;
+        padding: 0;
       }
       #harta {
-        width: 800px;
-        height: 600px;
+        width: 100%;
+        min-height: 500px;
       }
-      code {
-        border: 1px solid #CCC;
-        border-radius: 5px;
-        background: #e2e2e2;
+      .code {
         padding: 1rem;
         display: block;
       }
 
-      code p {
-        margin: 0;
+      blockquote p {
+        margin: 0 !important;
       }
     </style>
   </head>
@@ -27,21 +29,14 @@
     <div id='harta'></div>
     <script src='build/judete.js'></script>
     <script src='build/harta.js'></script>
-    <div>
-      <h3>Embed Code:</h3>
-      <code>
-          <p>
-              &lt;style&gt;
-              #harta {
-                     width: 800px;
-                      height: 600px;
-              }
-              &lt;/style&gt;
-          </p>
+    <div class="code content">
+      <h3 class="title is-5">Embed Code:</h3>
+      <h3 class="subtitle is-6">Copy/Paste to embed map.</h3>
+      <blockquote>
           <p>&lt;div id='harta'&gt;&lt;/div&gt;</p>
           <p>&lt;script src='http://thanky.ro/harta/build/judete.js'&gt;&lt;/script&gt;</p>
           <p>&lt;script src='http://thanky.ro/harta/build/harta.js'&gt;&lt;/script&gt;</p>
-      </code>
+      </blockquote>
     </div>
   </body>
 </html>
