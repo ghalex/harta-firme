@@ -32,5 +32,8 @@ export const createTextLayer = () => {
 export const createMap = (div) => {
   const map = L.map(div)
   map.setView([ 45.94, 24.96 ], 7)
+  map.dragging.disable()
+  map.touchZoom.disable()
+  map.scrollWheelZoom.disable()
   return map
 }
