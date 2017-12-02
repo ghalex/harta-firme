@@ -1,6 +1,6 @@
 const getColor = (d) => {
-  return d > 35000 ? '#ff2d00'
-    : d > 15000 ? '#ff8b00'
+  return d > 55000 ? '#ff2d00'
+    : d > 20000 ? '#ff8b00'
       : d > 10000 ? '#ffce00'
         : d > 8000 ? '#03756f'
           : '#00c8b6'
