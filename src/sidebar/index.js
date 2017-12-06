@@ -18,7 +18,7 @@ const template2 = `
     <div class='tab tab-0 is-active'>
       <div class="panel-block">
         <h4 class='title is-6'>
-          Top 3 firme după cifra de afaceri:
+          Top firme după cifra de afaceri:
         </h4>
       </div>
       <div class='panel-block content'>
@@ -48,7 +48,7 @@ const template2 = `
     <div class='tab tab-2'>
       <div class="panel-block">
         <h4 class='title is-6'>
-          Top 3 cele mai mai populare domenii de activitate:
+          Top cele mai mai populare domenii de activitate:
         </h4>
       </div>
       <div class='panel-block content'>
